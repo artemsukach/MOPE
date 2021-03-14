@@ -34,9 +34,8 @@ for i in range(8):
         XNormalized[i, j] = (X[i, j] - X0[j]) / DX[j]
         td_2.append(XNormalized[i, j].round(4))
 
-dY = 999999 
+dY = 999999  #dY це різниця між Y та Y_et. Таке велике значення обране для того, щоб не пропустити значення із масиву Y-ів.
 number = -1
-
 
 for i in range(8):                              
     if Y[i] - Y_et < dY and Y[i] - Y_et > 0:
