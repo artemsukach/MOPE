@@ -1,4 +1,6 @@
 import random, math, numpy as np
+from scipy.stats import f 
+from scipy.stats import t  
 
 
 def average(list):
@@ -66,19 +68,19 @@ def main():
         tt = 2.306
 
         student_check = {}
-        if (t0 > tt):
+        if (t0 > t.ppf(q=0.975, df=f3)):
             student_check[0] = b[0]
         else:
             student_check[0] = 0
-        if (t1 > tt):
+        if (t1 > t.ppf(q=0.975, df=f3)):
             student_check[1] = b[1]
         else:
             student_check[1] = 0
-        if (t2 > tt):
+        if (t2 > t.ppf(q=0.975, df=f3)):
             student_check[2] = b[2]
         else:
             student_check[2] = 0
-        if (t3 > tt):
+        if (t3 > t.ppf(q=0.975, df=f3)):
             student_check[3] = b[3]
         else:
             student_check[3] = 0
@@ -107,7 +109,7 @@ def main():
 
         ft = 4.5
 
-        if fp > ft:
+        if fp > f.ppf(q=0.95, dfn=f4, dfd=f3):
             print("Fp > Fт\nОтже, рівняння регресії неадекватно оригіналу при рівні значимості 0.05")
         else:
             print("Fp < Fт\nРівняння регресії адекватно оригіналу")
