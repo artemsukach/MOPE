@@ -161,29 +161,29 @@ def check(X, Y, B, n, m, norm=False):
     print(f'\nЗначення "y" з коефіцієнтами {final_k}')
     print(y_new)
     
-if len(znach_koef)==1:
-    m+=1
-else:
-    d = len(res)
-    if d >= n:
-        print('\nF4 <= 0')
-        print('')
-        return
-    f4 = n - d
-
-    Fp = kriteriy_fishera(Y, y_aver, y_new, n, m, d, dispersion_arr)
-
-    Ft = f.ppf(dfn=f4, dfd=f3, q=1 - 0.05)
-
-    print('\nПеревірка адекватності за критерієм Фішера')
-    print('Fp =', Fp)
-    print('Ft =', Ft)
-    if Fp < Ft:
-        print('Математична модель адекватна експериментальним даним')
-        return True
+    if len(y_new)==1:
+        m+=1
     else:
-        print('Математична модель не адекватна експериментальним даним')
-        return False
+        d = len(res)
+        if d >= n:
+            print('\nF4 <= 0')
+            print('')
+            return
+        f4 = n - d
+
+        Fp = kriteriy_fishera(Y, y_aver, y_new, n, m, d, dispersion_arr)
+
+        Ft = f.ppf(dfn=f4, dfd=f3, q=1 - 0.05)
+
+        print('\nПеревірка адекватності за критерієм Фішера')
+        print('Fp =', Fp)
+        print('Ft =', Ft)
+        if Fp < Ft:
+            print('Математична модель адекватна експериментальним даним')
+            return True
+        else:
+            print('Математична модель не адекватна експериментальним даним')
+            return False
 
 
 def with_interaction_effect(n, m):
