@@ -168,7 +168,7 @@ def kriteriy_fishera(y, y_aver, y_new, n, m, d):
 
 
 def check(X, Y, B, n, m):
-   
+    global t, x_range
     print('\n\tПеревірка рівняння:')
     f1 = m - 1
     f2 = n
@@ -230,7 +230,14 @@ def check(X, Y, B, n, m):
     else:
         print('Математична модель не адекватна експериментальним даним\nНеобхідно збільшити кількість дослідів')
         
-        
+        print("________________________________________________")
+         x_range = [list(j / 1.7 for j in i) for i in x_range]
+         x_aver_max = sum([x[1] for x in x_range]) / 3
+         x_aver_min = sum([x[0] for x in x_range]) / 3
+         y_max = 200 + int(x_aver_max)
+         y_min = 200 + int(x_aver_min)
+
+         main(15, 7)
 
 
 def main(n, m):
