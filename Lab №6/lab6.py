@@ -4,6 +4,7 @@ import numpy as np
 from numpy.linalg import solve
 from scipy.stats import f, t
 from prettytable import PrettyTable
+import time
 
 m = 3
 n = 15
@@ -22,6 +23,7 @@ deltax1 = x1max - x01
 deltax2 = x2max - x02
 deltax3 = x3max - x03
 
+time_list = []
 
 def function(X1, X2, X3):
     y = 9.9 + 9.0 * X1 + 6.3 * X2 + 5.3 * X3 + 9.7 * X1 * X1 + 0.9 * X2 * X2 + 9.5 * X3 * X3 + 6.3 * X1 * X2 + \
@@ -156,7 +158,10 @@ for k in range(15):
              list_for_a[k][6] + beta[8] * list_for_a[k][7] + beta[9] * list_for_a[k][8] + beta[10] * list_for_a[k][9]
 for i in range(15):
     print("{:.3f}".format(y_i[i]), end=" ")
+    
 print("\n\n------------------------------- Перевірка за критерієм Кохрена -------------------------------")
+
+start_time_kohren = time.perf_counter()
 Gp = max(dispersions) / sum(dispersions)
 Gt = 0.3346
 print("Gp =", Gp)
@@ -164,8 +169,10 @@ if Gp < Gt:
     print("Дисперсія однорідна")
 else:
     print("Дисперсія неоднорідна")
+print(f"Час перевірки однорідності дисперсії за Кохреном: {time.perf_counter() - start_time_kohren}")
 
 print("\n------------------ Перевірка значущості коефіцієнтів за критерієм Стьюдента ------------------")
+start_time_student = time.perf_counter()
 sb = sum(dispersions) / len(dispersions)
 sbs = (sb / (15 * m)) ** 0.5
 
@@ -198,8 +205,9 @@ for i in range(15):
 print("Значення з отриманими коефіцієнтами:")
 for i in range(15):
     print("{:.3f}".format(y_st[i]), end=" ")
-
+print(f"\nЧас перевірки значимості коефіцієнтів регресії за Стьюдентом: {time.perf_counter() - start_time_student}")
 print("\n\n------------------------- Перевірка адекватності за критерієм Фішера -------------------------")
+start_time_fisher = time.perf_counter()
 Sad = m * sum([(y_st[i] - Y_average[i]) ** 2 for i in range(15)]) / (n - d)
 Fp = Sad / sb
 F4 = n - d
@@ -208,3 +216,4 @@ if Fp < f.ppf(q=0.95, dfn=F4, dfd=F3):
     print("Рівняння регресії адекватне при рівні значимості 0.05")
 else:
     print("Рівняння регресії неадекватне при рівні значимості 0.05")
+print(f"Час перевірки адекватності моделі оригіналу за допомогою критерію Фішера: {time.perf_counter() -start_time_fisher}")
